@@ -1,4 +1,4 @@
-var app = angular.module('mean', ['ngRoute', 'ngAnimate', 'angular.filter', 'toaster']);
+var app = angular.module('mean', ['ngRoute', 'ngAnimate', 'ngResource', 'angular.filter', 'toaster']);
 
 app.run(function ($rootScope, $http, toaster) {
     $rootScope.authenticated = false;
@@ -15,8 +15,8 @@ app.run(function ($rootScope, $http, toaster) {
 app.config(function ($routeProvider) {
     $routeProvider
         .when('/', {
-            templateUrl: 'user/items.html',
-            controller: 'itemsController'
+            templateUrl: 'main.html',
+            controller: 'mainController'
         })
         .when('/login', {
             templateUrl: 'user/login.html',
@@ -25,6 +25,10 @@ app.config(function ($routeProvider) {
         .when('/signup', {
             templateUrl: 'user/signup.html',
             controller: 'authController'
+        })
+        .when('/items', {
+            templateUrl: 'user/items.html',
+            controller: 'itemsController'
         });
 });
 
@@ -57,8 +61,12 @@ app.controller('authController', function ($scope, $http, $rootScope, $location,
     };
 });
 
-app.controller('itemsController', function ($scope) {
-    $scope.items = [];
+app.factory('itemsService', function($resource){
+    return $resource('/api/items/:id');
+});
+
+app.controller('itemsController', function (itemsService, $scope, $rootScope) {
+    $scope.items = itemsService.query();
     $scope.newItem = {
         created_by: 'Me',
         name: '',
@@ -72,10 +80,8 @@ app.controller('itemsController', function ($scope) {
         $scope.newItem.created_at = Date.now();
         $scope.items.push($scope.newItem);
         $scope.newItem = {
-            created_by: 'Me',
             name: '',
-            description: '',
-            category: '',
+            content: '',
             online: 'false',
             created_at: ''
         };

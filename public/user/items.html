@@ -1,0 +1,38 @@
+<div class="row">
+    <div class="col-lg-10 col-lg-offset-1">
+        <h1>My items</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-10 col-lg-offset-1">
+        <div class="panel panel-primary">
+            <div class="panel-heading"></div>
+            <div class="panel-body">
+                <table class="table table-striped table-hover ">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Content</th>
+                        <th>Author</th>
+                        <th>Online</th>
+                        <th>Created at</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in items | filter:{ created_by : logged_user.username }:true ">
+                            <td>{{ item._id}}</td>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.content }}</td>
+                            <td>{{ item.created_by }}</td>
+                            <td><span class="label" ng-class="{true: 'label-success', false: 'label-default'}[item.online == true]">{{ item.online }}</span>
+                            </td>
+                            <td>{{ item.created_at | date:'dd-MM-yyyy - HH:mm'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
