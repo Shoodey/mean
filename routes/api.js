@@ -4,10 +4,7 @@ var mongoose = require('mongoose');
 var Item = mongoose.model('Item');
 var User = mongoose.model('User');
 //Used for routes that must be authenticated.
-/*function isAuthenticated(req, res, next) {
-    if(req.method === "GET"){
-        return next();
-    }
+function isAuthenticated(req, res, next) {
     if (!req.isAuthenticated())
         res.redirect('#/login');
     else next();
@@ -15,7 +12,7 @@ var User = mongoose.model('User');
 };
 
 //Register the authentication middleware
-router.use('/items', isAuthenticated);*/
+router.use('/items', isAuthenticated);
 
 router.route('/items')
     .post(function (req, res) {

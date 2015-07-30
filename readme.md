@@ -9,11 +9,8 @@ Items management application using the MEAN Stack.
 -------------
 
 > **AngularJS:** front end, client side.
->
 > **MongoDB:** stores data.
->
 > **ExpressJS:** routing system.
->
 > **NodeJS:** back end, server side.
 
 
@@ -64,3 +61,19 @@ Todo list (non exhaustive).
 >
 > *  Admin can create categories.
 > * Users can then associate items with the desired category (categories or tags later)
+
+## Issues
+-------------
+
+> **Session:**
+> 
+> *   Even though session is stored in DB, AngularJS doesn't seem to keep the logged in user's info provided by PassportJS.
+> *   I used this middleware in routes/api.js
+> function isAuthenticated(req, res, next) {
+>&nbsp; &nbsp; &nbsp;if (!req.isAuthenticated())
+> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;res.redirect('#/login');
+> &nbsp; &nbsp; &nbsp;else next();
+>};
+>router.use('/items', isAuthenticated);`
+>But I get this error : 
+>`Failed to load resource: net::ERR_TOO_MANY_REDIRECTS`
