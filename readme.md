@@ -69,11 +69,11 @@ Todo list (non exhaustive).
 > 
 > *   Even though session is stored in DB, AngularJS doesn't seem to keep the logged in user's info provided by PassportJS.
 > *   I used this middleware in routes/api.js
-> function isAuthenticated(req, res, next) {
->&nbsp; &nbsp; &nbsp;if (!req.isAuthenticated())
-> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;res.redirect('#/login');
-> &nbsp; &nbsp; &nbsp;else next();
->};
->router.use('/items', isAuthenticated);`
->But I get this error : 
->`Failed to load resource: net::ERR_TOO_MANY_REDIRECTS`
+>> ` function isAuthenticated(req, res, next) {`<br>
+>&nbsp; &nbsp; &nbsp; `if (!req.isAuthenticated())` <br>
+> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; `res.redirect('#/login')`;<br>
+> &nbsp; &nbsp; &nbsp; `else next();`<br>
+> `};`<br>
+>`router.use('/items', isAuthenticated);` <br>
+> But I get this error : <br>
+>`Failed to load resource: net::ERR_TOO_MANY_REDIRECTS`<br>
