@@ -44,6 +44,7 @@ Items management application using the MEAN Stack.
 > *   Users can add/update their respective items in a single page view.
 
 ## TODO List
+-------------
 
 Todo list (non exhaustive).
 > **Users:**
