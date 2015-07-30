@@ -68,8 +68,8 @@ Todo list (non exhaustive).
 > **Session:**
 > 
 > *   Even though session is stored in DB, AngularJS doesn't seem to keep the logged in user's info provided by PassportJS.
-> *   I used this middleware in routes/api.js
->> ` function isAuthenticated(req, res, next) {`<br>
+> *   I used this middleware in routes/api.js <br>
+> ` function isAuthenticated(req, res, next) {`<br>
 >&nbsp; &nbsp; &nbsp; `if (!req.isAuthenticated())` <br>
 > &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; `res.redirect('#/login')`;<br>
 > &nbsp; &nbsp; &nbsp; `else next();`<br>
