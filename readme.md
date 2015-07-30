@@ -9,8 +9,11 @@ Items management application using the MEAN Stack.
 -------------
 
 > **AngularJS:** front end, client side.
+>
 > **MongoDB:** stores data.
+>
 > **ExpressJS:** routing system.
+>
 > **NodeJS:** back end, server side.
 
 
