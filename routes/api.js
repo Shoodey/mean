@@ -1,33 +1,37 @@
 var express = require('express');
 var router = express.Router();
-var mongoose = require( 'mongoose' );
+var mongoose = require('mongoose');
 var Item = mongoose.model('Item');
 var User = mongoose.model('User');
 //Used for routes that must be authenticated.
-function isAuthenticated (req, res, next) {
-
+/*function isAuthenticated(req, res, next) {
+    if(req.method === "GET"){
         return next();
+    }
+    if (!req.isAuthenticated())
+        res.redirect('#/login');
+    else next();
 
 };
 
 //Register the authentication middleware
-router.use('/items', isAuthenticated);
+router.use('/items', isAuthenticated);*/
 
 router.route('/items')
-    .post(function(req, res){
+    .post(function (req, res) {
         var user_id = req.session.passport.user;
         User.findOne({_id: user_id}, function (err, user) {
-            if(err)
+            if (err)
                 return done(err);
-            if(user){
+            if (user) {
                 var item = new Item();
                 item.name = req.body.name;
                 item.content = req.body.content;
                 item.online = req.body.online;
                 item.created_by = user.username;
 
-                item.save(function(err, item) {
-                    if (err){
+                item.save(function (err, item) {
+                    if (err) {
                         return res.send(500, err);
                     }
                     return res.json(item);
@@ -38,9 +42,9 @@ router.route('/items')
 
     })
     //gets all items
-    .get(function(req, res){
-        Item.find(function(err, items){
-            if(err){
+    .get(function (req, res) {
+        Item.find(function (err, items) {
+            if (err) {
                 return res.send(500, err);
             }
             return res.send(items);
@@ -50,25 +54,25 @@ router.route('/items')
 //item-specific commands. likely won't be used
 router.route('/items/:id')
     //gets specified item
-    .get(function(req, res){
-        Item.findById(req.params.id, function(err, item){
-            if(err)
+    .get(function (req, res) {
+        Item.findById(req.params.id, function (err, item) {
+            if (err)
                 res.send(err);
             res.json(item);
         });
     })
     //updates specified item
-    .put(function(req, res){
-        Item.findById(req.params.id, function(err, item){
-            if(err)
+    .put(function (req, res) {
+        Item.findById(req.params.id, function (err, item) {
+            if (err)
                 res.send(err);
 
             item.name = req.body.name;
             item.content = req.body.content;
             item.online = req.body.online;
 
-            item.save(function(err, item){
-                if(err)
+            item.save(function (err, item) {
+                if (err)
                     res.send(err);
 
                 res.json(item);
@@ -76,13 +80,15 @@ router.route('/items/:id')
         });
     })
     //deletes the item
-    .delete(function(req, res) {
+    .delete(function (req, res) {
+        console.log('asked for del');
         Item.remove({
             _id: req.params.id
-        }, function(err) {
+        }, function (err) {
             if (err)
                 res.send(err);
             res.json("deleted :(");
+            console.log('deleted');
         });
     });
 

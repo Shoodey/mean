@@ -1,11 +1,61 @@
 <div class="row">
     <div class="col-lg-10 col-lg-offset-1">
-        <h1>My items</h1>
+        <h1>Add an item</h1>
+        <hr>
     </div>
 </div>
 
 <div class="row">
     <div class="col-lg-10 col-lg-offset-1">
+        <div class="panel panel-primary">
+            <div class="panel-heading"></div>
+            <div class="panel-body">
+                <form class="form-horizontal" ng-submit="postItem()">
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="name" class="col-lg-2 control-label">Name</label>
+
+                            <div class="col-lg-10">
+                                <input required type="text" class="form-control" id="name" placeholder="Name"
+                                       ng-model="newItem.name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="content" class="col-lg-2 control-label">Content</label>
+
+                            <div class="col-lg-10">
+                            <textarea required class="form-control" rows="3" id="content"
+                                      ng-model="newItem.content"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="online" class="col-lg-2 control-label">Online</label>
+
+                            <div class="col-lg-10">
+                                <input type="checkbox" id="online" ng-model="newItem.online">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-10 col-lg-offset-2">
+                                <button type="reset" class="btn btn-default">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-10 col-lg-offset-1">
+        <h1>My items</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-12">
         <div class="panel panel-primary">
             <div class="panel-heading"></div>
             <div class="panel-body">
@@ -18,17 +68,38 @@
                         <th>Author</th>
                         <th>Online</th>
                         <th>Created at</th>
+                        <th>Ops</th>
                     </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="item in items | filter:{ created_by : logged_user.username }:true ">
-                            <td>{{ item._id}}</td>
-                            <td>{{ item.name }}</td>
-                            <td>{{ item.content }}</td>
-                            <td>{{ item.created_by }}</td>
-                            <td><span class="label" ng-class="{true: 'label-success', false: 'label-default'}[item.online == true]">{{ item.online }}</span>
+                        <tr ng-repeat="item in items | filter:{ created_by : logged_user.username }:true | orderBy:'created_at':true">
+                            <td>
+                                <div ng-hide="editingData[item._id]"> {{ item._id }}</div>
                             </td>
-                            <td>{{ item.created_at | date:'dd-MM-yyyy - HH:mm'}}</td>
+                            <td>
+                                <div ng-hide="editingData[item._id]">{{ item.name }}</div>
+                                <div ng-show="editingData[item._id]"><input type="text" ng-model="item.name" class="input-small"/></div>
+                            </td>
+                            <td>
+                               <div ng-hide="editingData[item._id]">{{ item.content }}</div>
+                                <div ng-show="editingData[item._id]"><input type="text" ng-model="item.content" class="input-small"/></div>
+                            </td>
+                            <td>
+                                <div ng-hide="editingData[item._id]">{{ item.created_by }}</div>
+                            </td>
+                            <td>
+                                <div ng-hide="editingData[item._id]"><span class="label" ng-class="{true: 'label-success', false: 'label-default'}[item.online == true]">{{ item.online }}</span></div>
+                                <div ng-show="editingData[item._id]"><input type="checkbox" ng-model="item.online" /></div>
+
+                            </td>
+                            <td>
+                                <div ng-hide="editingData[item._id]">{{ item.created_at | date:'dd-MM-yyyy - HH:mm'}}</div>
+                            </td>
+                            <td>
+                                <a href="" class="btn btn-primary btn-xs" ng-hide="editingData[item._id]" ng-click="modifyItem(item)">Modify</a>
+                                <a href="" class="btn btn-primary btn-xs" ng-show="editingData[item._id]" ng-click="updateItem(item)">Update</a>
+                                <a href="" class="btn btn-danger btn-xs" ng-click="deleteItem(item._id)" ng-hide="editingData[item._id]">X</a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
